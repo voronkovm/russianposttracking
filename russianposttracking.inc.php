@@ -37,7 +37,9 @@ class RussianPostTracking
 			 "getOperationHistory",
 			 SOAP_1_2
 		);
-
+		
+		//echo $response;
+		
 		$xml = simplexml_load_string($response);
 		$error =  $xml->children('S', true)->Body->Fault;
 		if($error)
@@ -61,23 +63,19 @@ class RussianPostTracking
 		return $rows;
 	}
 	
-	/* - not working
 	function PostalOrderEventsForMail($barcode)
 	{
 		$response = $this->client->__doRequest(
 			'<?xml version="1.0" encoding="UTF-8"?>
-				<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:oper="http://russianpost.org/operationhistory" xmlns:data="http://russianpost.org/operationhistory/data" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+				<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:oper="http://russianpost.org/operationhistory" xmlns:data="http://russianpost.org/operationhistory/data" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:data1="http://www.russianpost.org/RTM/DataExchangeESPP/Data">
                 <soap:Header/>
                 <soap:Body>
                    <oper:PostalOrderEventsForMail>
-					  <data:PostalOrderEventsForMailRequest>
-                         <data:Barcode>'.$barcode.'</data:Barcode>  
-                         <data:Language>'.$this->lang.'</data:Language>
-                      </data:PostalOrderEventsForMailRequest>
                       <data:AuthorizationHeader soapenv:mustUnderstand="1">
                          <data:login>'.$this->login.'</data:login>
                          <data:password>'.$this->password.'</data:password>
                       </data:AuthorizationHeader>
+					  <data1:PostalOrderEventsForMailInput Barcode="'.$barcode.'" Language="'.$this->lang.'"/>
                    </oper:PostalOrderEventsForMail>
                 </soap:Body>
              </soap:Envelope>',
@@ -85,7 +83,13 @@ class RussianPostTracking
 			 "PostalOrderEventsForMail",
 			 SOAP_1_2
 		);
-		echo $response;
+		
+		//echo $response;
+		
+		$xml = simplexml_load_string($response);
+		
+		$data = $xml->children('S', true)->Body->children('ns7', true)->PostalOrderEventsForMailResponse->children('ns6', true)->PostalOrderEventsForMaiOutput->children()->PostalOrderEvent;
+
+		return $data;
 	}
-	*/
 }
