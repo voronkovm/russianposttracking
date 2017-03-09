@@ -1,5 +1,6 @@
 <?php
-require "russianposttracking.inc.php";
+
+require 'vendor/autoload.php';
 
 $client = new RussianPostTracking('login', 'pass');
 

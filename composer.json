@@ -1,0 +1,19 @@
+{
+    "name": "kilylabs/russianposttracking",
+    "description": "API wrapper for tracking.pochta.ru (forked from voronkovm/russianposttracking)",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Alexander Bogdanov",
+            "email": "ab@dev.kily.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "require": {
+        "php": ">=5.3.1",
+        "ext-soap": "*"
+    }
+}
